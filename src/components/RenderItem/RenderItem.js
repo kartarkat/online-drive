@@ -2,19 +2,24 @@ import React from 'react'
 import { Images } from '../../Assets/Images'
 import './RenderItem.css'
 
-function RenderItem({ item = {} }) {
-  const { id, name, isFolder } = item
+function RenderItem({ item = {}, setFileData }) {
+  const { name, isFolder } = item
   const { folder, file } = Images
 
+  const handleItemClick = () => {
+    setFileData(item)
+  }
 
   const renderExtension = (name) => {
     const fileExtension = name.split('.').pop()
     return <span className='fileExtension'>.{fileExtension}</span>
-
   }
 
   return (
-    <div key={id} className='item'>
+    <div
+      className='item'
+      onClick={isFolder ? handleItemClick : () => { }}
+    >
       <img
         className='fileIcon'
         alt={name}
