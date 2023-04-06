@@ -4,10 +4,11 @@ import './RenderItem.css'
 import Modal from '../Modal/Modal';
 import CreateForm from '../CreateForm/CreateForm';
 
-function RenderItem({ item = {}, setFileData, deleteData, updateData }) {
+function RenderItem({ item = {}, setFileData, deleteData, updateData, isValuePresent }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dataType, setDataType] = useState(false)
+  const [formError, setFormError] = useState(false)
 
   const menuRef = useRef(null);
   const { id, name, isFolder } = item
@@ -42,8 +43,11 @@ function RenderItem({ item = {}, setFileData, deleteData, updateData }) {
   }
 
   const handleEditItem = (val) => {
-    updateData(id, val)
-    setIsModalOpen(false)
+    if (!isValuePresent(val)) {
+      updateData(id, val)
+      setIsModalOpen(false)
+    }
+    else setFormError(true)
   }
 
   const handleMenu = (event, isEdit) => {
@@ -79,7 +83,7 @@ function RenderItem({ item = {}, setFileData, deleteData, updateData }) {
       <div className='itemName'>{name}</div>
       {isMenuOpen ? renderMenu() : ''}
       <Modal title='Rename' isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <CreateForm isEdit={true} dataType={dataType} handleCreateItem={handleEditItem} />
+        <CreateForm isEdit={true} dataType={dataType} formError={formError} btnText={'Rename'} handleCreateItem={handleEditItem} />
       </Modal>
     </div>
 

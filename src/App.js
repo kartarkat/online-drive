@@ -32,6 +32,16 @@ function App() {
     items.forEach(item => item.id === parentId ? setFileData(item) : handleNavigate(item.parentId, item));
 };
 
+const isValuePresent = (value, config = fileConfig) => {
+  const { name, items } = config;
+  let isPresent
+  if(value === name)  isPresent = true
+  items.forEach(item => item.name === value ? isPresent = true : isValuePresent(item.name, item));
+  return isPresent
+  // isPresent = items.some(item => item.name === name)
+
+}
+
   return (
     <div className="App">
       <RenderFiles 
@@ -41,6 +51,7 @@ function App() {
       insertData={handleInsertData}
       deleteData={handleDeleteData}
       updateData={handleUpdateData}
+      isValuePresent={isValuePresent}
       /> 
   </div>
   );

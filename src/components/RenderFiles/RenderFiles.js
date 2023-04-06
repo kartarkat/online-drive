@@ -6,14 +6,19 @@ import Modal from '../Modal';
 import CreateForm from '../CreateForm/CreateForm';
 
 
-function RenderFiles({ fileData = {}, setFileData, handleNavigate, insertData, deleteData, updateData }) {
+function RenderFiles({ fileData = {}, setFileData, handleNavigate, insertData, deleteData, updateData, isValuePresent }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [formError, setFormError] = useState(false)
     const { id, parentId, name, items = [] } = fileData
     const { arrowUp, newBtn } = Images
 
     const handleCreateItem = (value, isFolder) => {
-        insertData(id, value, isFolder, parentId)
-        setIsModalOpen(false)
+        if (!isValuePresent(value)) {
+            insertData(id, value, isFolder, parentId)
+            setIsModalOpen(false)
+        } else {
+            setFormError(true)
+        }
     }
 
     return (
@@ -27,7 +32,7 @@ function RenderFiles({ fileData = {}, setFileData, handleNavigate, insertData, d
                 <div className='headingText'>{name}</div>
             </div>
             <div className='body'>
-                {items.map(item => <RenderItem key={item.id} item={item} setFileData={setFileData} deleteData={deleteData} updateData={updateData} />)}
+                {items.map(item => <RenderItem key={item.id} item={item} setFileData={setFileData} deleteData={deleteData} updateData={updateData} isValuePresent={isValuePresent} />)}
                 <div className='item' onClick={() => setIsModalOpen(true)}>
                     <img
                         className='fileIcon'
@@ -37,7 +42,7 @@ function RenderFiles({ fileData = {}, setFileData, handleNavigate, insertData, d
                 </div>
             </div>
             <Modal title='Create new' isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <CreateForm handleCreateItem={handleCreateItem} />
+                <CreateForm handleCreateItem={handleCreateItem} formError={formError} />
             </Modal>
         </div>
     )

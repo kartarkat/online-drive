@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import './CreateForm.css'
 
-function CreateForm({ handleCreateItem, isEdit = false, dataType }) {
+function CreateForm({ handleCreateItem, isEdit = false, dataType, formError, btnText = 'Create' }) {
     const [isFolder, setIsFolder] = useState(dataType)
     const inputRef = useRef(null)
     const [inputError, setInputError] = useState(null)
@@ -53,11 +53,12 @@ function CreateForm({ handleCreateItem, isEdit = false, dataType }) {
                     type='text'
                     ref={inputRef}
                     required />
-                {inputError &&
+                {formError ? <div className='error'>File / Folder name already exists!</div> : '' }
+                {inputError ?
                     <div className='error'>{inputError}
                         <div>{`Not allowed: <, >, :, ", /, \\, |, ?, *`}</div>
-                    </div>}
-                <button className='createBtn' type='submit'>Create</button>
+                    </div> : ''}
+                <button className='createBtn' type='submit'>{btnText}</button>
             </form>
         </div>
     )
