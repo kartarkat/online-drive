@@ -6,9 +6,9 @@ import Modal from '../Modal';
 import CreateForm from '../CreateForm/CreateForm';
 
 
-function RenderFiles({ fileData = {}, setFileData }) {
+function RenderFiles({ fileData = {}, setFileData, handleNavigate }) {
     const [isOpen, setIsOpen] = useState(false);
-    const { name, items = [] } = fileData
+    const { parentId, name, items = [] } = fileData
     const { arrowUp, newBtn } = Images
 
     const handleCreateItem = (event, ref, isFolder) => {
@@ -21,14 +21,15 @@ function RenderFiles({ fileData = {}, setFileData }) {
         <div className='container'>
             <div className='header'>
                 <img
-                    className='arrowIcon'
+                    onClick={parentId ? () => handleNavigate(parentId) : () => { }}
+                    className={`arrowIcon ${!parentId ? 'disable' : ''}`}
                     alt={name}
                     src={arrowUp} />
                 <div className='headingText'>{name}</div>
             </div>
             <div className='body'>
                 {items.map(item => <RenderItem key={item.id} item={item} setFileData={setFileData} />)}
-                <div className='item' onClick={()=> setIsOpen(true)}>
+                <div className='item' onClick={() => setIsOpen(true)}>
                     <img
                         className='fileIcon'
                         alt={name}
@@ -37,7 +38,7 @@ function RenderFiles({ fileData = {}, setFileData }) {
                 </div>
             </div>
             <Modal title='Create new' isOpen={isOpen} onClose={() => setIsOpen(false)}>
-               <CreateForm handleCreateItem={handleCreateItem}/>
+                <CreateForm handleCreateItem={handleCreateItem} />
             </Modal>
         </div>
     )

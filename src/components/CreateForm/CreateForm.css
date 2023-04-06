@@ -40,6 +40,12 @@
     border-radius: 5px;
 }
 
+.error{
+    font-size: 1rem;
+    color: red;
+    padding: .5rem;
+}
+
 .createBtn {
     width: 15rem;
     padding: 0.75rem;

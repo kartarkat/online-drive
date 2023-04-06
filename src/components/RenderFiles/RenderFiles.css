@@ -18,6 +18,12 @@
     width: 2rem;
     height: 2rem;
     transform: rotate(270deg);
+    cursor: pointer;
+}
+
+.disable{
+    opacity: 0.5;
+    cursor: auto;
 }
 
 .body {
