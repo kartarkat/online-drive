@@ -6,15 +6,14 @@ import Modal from '../Modal';
 import CreateForm from '../CreateForm/CreateForm';
 
 
-function RenderFiles({ fileData = {}, setFileData, handleNavigate }) {
-    const [isOpen, setIsOpen] = useState(false);
-    const { parentId, name, items = [] } = fileData
+function RenderFiles({ fileData = {}, setFileData, handleNavigate, insertData, deleteData, updateData }) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const { id, parentId, name, items = [] } = fileData
     const { arrowUp, newBtn } = Images
 
-    const handleCreateItem = (event, ref, isFolder) => {
-        event.preventDefault()
-        console.log('check', ref.current.value, isFolder)
-        setIsOpen(false)
+    const handleCreateItem = (value, isFolder) => {
+        insertData(id, value, isFolder, parentId)
+        setIsModalOpen(false)
     }
 
     return (
@@ -28,8 +27,8 @@ function RenderFiles({ fileData = {}, setFileData, handleNavigate }) {
                 <div className='headingText'>{name}</div>
             </div>
             <div className='body'>
-                {items.map(item => <RenderItem key={item.id} item={item} setFileData={setFileData} />)}
-                <div className='item' onClick={() => setIsOpen(true)}>
+                {items.map(item => <RenderItem key={item.id} item={item} setFileData={setFileData} deleteData={deleteData} updateData={updateData} />)}
+                <div className='item' onClick={() => setIsModalOpen(true)}>
                     <img
                         className='fileIcon'
                         alt={name}
@@ -37,7 +36,7 @@ function RenderFiles({ fileData = {}, setFileData, handleNavigate }) {
                     />
                 </div>
             </div>
-            <Modal title='Create new' isOpen={isOpen} onClose={() => setIsOpen(false)}>
+            <Modal title='Create new' isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <CreateForm handleCreateItem={handleCreateItem} />
             </Modal>
         </div>

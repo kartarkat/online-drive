@@ -8,20 +8,51 @@
     position: relative;
 }
 
+.item:hover {
+    background-color: rgb(193, 221, 245);
+}
+
 .fileIcon {
     width: 6rem;
     height: 6rem;
 }
 
-.itemName{
+.itemName {
     font-size: 1.5rem;
 }
 
-.fileExtension{
+.fileExtension {
     position: absolute;
     background: red;
     color: white;
     padding: 0.2rem 0.6rem;
     border-radius: 0.5rem;
     bottom: 4rem;
+}
+
+.menuContainer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: -1rem;
+    right: -4rem;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    gap: 0.5rem
+}
+
+.menuContainer div {
+    padding: .5rem;
+    min-width: 7rem;
+    border-radius: 5px;
+}
+
+.menuContainer div:hover {
+    background-color: rgb(218, 220, 222);
+}
+
+.rename {}
+
+.delete {
+    color: red;
 }

@@ -1,16 +1,17 @@
 import React, { useRef, useState } from 'react'
 import './CreateForm.css'
 
-function CreateForm({ handleCreateItem }) {
-    const [isFolder, setIsFolder] = useState(false)
+function CreateForm({ handleCreateItem, isEdit = false, dataType }) {
+    const [isFolder, setIsFolder] = useState(dataType)
     const inputRef = useRef(null)
     const [inputError, setInputError] = useState(null)
 
     const handleFormSubmit = (event) => {
-        event.preventDefault();
+        event.preventDefault()
+        event.stopPropagation()
         const value = inputRef?.current?.value
-        const folderNameRegex =  /^[^\\/?%*:.|"<>]+$/;
-        const fileNameRegex = /^[^<>:"/\\|?*]*\.[^<>:"/\\|?*]*$/;
+        const folderNameRegex = /^[^\\/?%*:.|"<>]+$/
+        const fileNameRegex = /^[^<>:"/\\|?*]*\.[^<>:"/\\|?*]*$/
 
         if (isFolder && !folderNameRegex.test(value)) {
             setInputError('Valid: name, Eg: myFolder')
@@ -33,23 +34,29 @@ function CreateForm({ handleCreateItem }) {
     return (
         <div>
             <form className='form' onSubmit={handleFormSubmit}>
-                <div className='dataType'>
-                    <div
-                        className={`fileType ${!isFolder ? 'active' : 'notActive'}`}
-                        onClick={handleDataType}
-                    >
-                        File</div>
-                    <div
-                        className={`folderType ${isFolder ? 'active' : 'notActive'}`}
-                        onClick={handleDataType}
-                    >
-                        Folder</div>
-                </div>
-                <input className='inputField' placeholder={`Enter ${isFolder ? 'Folder' : 'File'} name`} type='text' ref={inputRef} required />
-                {inputError && 
-                <div className='error'>{inputError}
-                <div>{`Not allowed: <, >, :, ", /, \\, |, ?, *`}</div>
-                </div>}
+                {!isEdit ?
+                    <div className='dataType'>
+                        <div
+                            className={`fileType ${!isFolder ? 'active' : 'notActive'}`}
+                            onClick={handleDataType}
+                        >
+                            File</div>
+                        <div
+                            className={`folderType ${isFolder ? 'active' : 'notActive'}`}
+                            onClick={handleDataType}
+                        >
+                            Folder</div>
+                    </div>
+                    : ''}
+                <input className='inputField'
+                    placeholder={`Enter ${isFolder ? 'Folder' : 'File'} name`}
+                    type='text'
+                    ref={inputRef}
+                    required />
+                {inputError &&
+                    <div className='error'>{inputError}
+                        <div>{`Not allowed: <, >, :, ", /, \\, |, ?, *`}</div>
+                    </div>}
                 <button className='createBtn' type='submit'>Create</button>
             </form>
         </div>

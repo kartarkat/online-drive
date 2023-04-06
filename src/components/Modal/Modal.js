@@ -14,11 +14,15 @@ const Modal = ({ isOpen, onClose, children, title }) => {
         };
     }, [modalRef, onClose]);
 
+    const handleModalClick = (event) => {
+        event.stopPropagation();
+    };
+
     if (!isOpen) return null;
 
     return (
         <div className="modal-overlay">
-            <div className="modal" ref={modalRef}>
+            <div className="modal" ref={modalRef} onClick={handleModalClick}>
                 <div className="modalHeading">{title}</div>
                 <button className="closeModal" onClick={onClose}>x</button>
                 <div className="modalContent">{children}</div>
