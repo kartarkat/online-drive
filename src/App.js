@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { fileConfig } from './Assets/Data/fileConfig';
-import RenderFiles from './components/RenderFiles';
+import Files from './components/Files';
 
 function App() {
   const [fileData, setFileData] = useState(fileConfig)
@@ -39,7 +39,7 @@ function App() {
 
   return (
     <div className="App">
-      <RenderFiles
+      <Files
         fileData={fileData}
         setFileData={setFileData}
         breadcrumbs={breadcrumbs}

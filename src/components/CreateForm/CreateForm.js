@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react'
 import './CreateForm.css'
 
-function CreateForm({ handleCreateItem, isEdit = false, dataType, formError, btnText = 'Create' }) {
-    const [isFolder, setIsFolder] = useState(dataType)
+function CreateForm({ handleSubmit, isEditMode, currentItem, formError }) {
+    const [activeTab, setActiveTab] = useState(currentItem.isFolder)
     const inputRef = useRef(null)
     const [inputError, setInputError] = useState(null)
 
@@ -13,52 +13,49 @@ function CreateForm({ handleCreateItem, isEdit = false, dataType, formError, btn
         const folderNameRegex = /^[^\\/?%*:.|"<>]+$/
         const fileNameRegex = /^[^<>:"/\\|?*]*\.[^<>:"/\\|?*]*$/
 
-        if (isFolder && !folderNameRegex.test(value)) {
+        if (activeTab && !folderNameRegex.test(value)) {
             setInputError('Valid: name, Eg: myFolder')
         }
-        else if (!isFolder && !fileNameRegex.test(value)) {
+        else if (!activeTab && !fileNameRegex.test(value)) {
             setInputError('Valid: name.ext, Eg: index.js')
         }
         else {
             setInputError(null);
-            handleCreateItem(value, isFolder);
+            handleSubmit(value, currentItem);
         }
     }
 
     const handleDataType = () => {
-        setIsFolder(prev => !prev)
+        setActiveTab(prev => !prev)
         setInputError(null)
         inputRef.current.value = ''
     }
 
+    const renderDataType = () => (
+        <div className='dataType'>
+            <div className={`fileType ${!activeTab ? 'active' : 'notActive'}`}
+                onClick={handleDataType}> File</div>
+            <div className={`folderType ${activeTab ? 'active' : 'notActive'}`}
+                onClick={handleDataType}>Folder</div>
+        </div>
+    )
+
     return (
         <div>
             <form className='form' onSubmit={handleFormSubmit}>
-                {!isEdit ?
-                    <div className='dataType'>
-                        <div
-                            className={`fileType ${!isFolder ? 'active' : 'notActive'}`}
-                            onClick={handleDataType}
-                        >
-                            File</div>
-                        <div
-                            className={`folderType ${isFolder ? 'active' : 'notActive'}`}
-                            onClick={handleDataType}
-                        >
-                            Folder</div>
-                    </div>
-                    : ''}
+                {!isEditMode ? renderDataType() : ''}
                 <input className='inputField'
-                    placeholder={`Enter ${isFolder ? 'Folder' : 'File'} name`}
+                    placeholder={`Enter ${activeTab ? 'Folder' : 'File'} name`}
                     type='text'
                     ref={inputRef}
+                    defaultValue={currentItem.name}
                     required />
-                {formError ? <div className='error'>File / Folder name already exists!</div> : '' }
+                {formError ? <div className='error'>File / Folder name already exists!</div> : ''}
                 {inputError ?
                     <div className='error'>{inputError}
                         <div>{`Not allowed: <, >, :, ", /, \\, |, ?, *`}</div>
                     </div> : ''}
-                <button className='createBtn' type='submit'>{btnText}</button>
+                <button className='createBtn' type='submit'>{isEditMode ? 'Rename' : 'Create'}</button>
             </form>
         </div>
     )
