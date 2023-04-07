@@ -25,6 +25,7 @@ function RenderFiles(
         if (!isValuePresent(value)) {
             insertData(id, value, isFolder, parentId)
             setIsModalOpen(false)
+            setFormError(false)
         } else {
             setFormError(true)
         }
@@ -65,7 +66,7 @@ function RenderFiles(
                     />
                 </div>
             </div>
-            <Modal title='Create new' isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            <Modal title='Create new' isOpen={isModalOpen} onClose={() => {setIsModalOpen(false); setFormError(false)}}>
                 <CreateForm handleCreateItem={handleCreateItem} formError={formError} />
             </Modal>
         </div>

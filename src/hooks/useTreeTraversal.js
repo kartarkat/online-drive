@@ -31,20 +31,6 @@ function useTreeTraversal() {
     return { ...data, items: newItems };
   };
 
-  // const isNodePresent = (data, id) => {
-  //   let { items } = data;
-  //   let isPresent
-  //   if (data.id === id) {
-  //     isPresent = true
-  //   } else if (data.items) {
-  //     isPresent = items.find((item) => item.id !== id);
-  //   }
-
-  //   let newItems = [];
-  //   newItems = items.map((d) => deleteNode(d, id));
-  //   return { ...data, items: newItems };
-  // }
-
   const updateNode = (data, id, value) => {
     if (data.id === id) {
       data.name = value;

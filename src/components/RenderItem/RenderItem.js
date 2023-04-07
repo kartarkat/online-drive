@@ -15,22 +15,22 @@ function RenderItem({ item = {}, setFileData, deleteData, updateData, isValuePre
   const { folder, file } = Images
 
   useEffect(() => {
-    document.addEventListener("click", handleClick);
+    document.addEventListener("click", closeMenu);
     return () => {
-      document.removeEventListener("click", handleClick);
+      document.removeEventListener("click", closeMenu);
     };
   }, []);
+
+  const closeMenu = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setIsMenuOpen(false);
+    }
+  };
 
   const handleItemClick = () => {
     setFileData(item)
     setBreadcrumbs(prev => ([...prev, {id: item.id, name: item.name, parentId: item.parentId}]));
   }
-
-  const handleClick = (event) => {
-    if (menuRef.current && !menuRef.current.contains(event.target)) {
-      setIsMenuOpen(false);
-    }
-  };
 
   const handleRightClick = (event, isFolder) => {
     event.preventDefault()
@@ -47,6 +47,7 @@ function RenderItem({ item = {}, setFileData, deleteData, updateData, isValuePre
     if (!isValuePresent(val)) {
       updateData(id, val)
       setIsModalOpen(false)
+      setFormError(false)
     }
     else setFormError(true)
   }
@@ -83,7 +84,7 @@ function RenderItem({ item = {}, setFileData, deleteData, updateData, isValuePre
       {!isFolder ? renderExtension(name) : ''}
       <div className='itemName'>{name}</div>
       {isMenuOpen ? renderMenu() : ''}
-      <Modal title='Rename' isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+      <Modal title='Rename' isOpen={isModalOpen} onClose={() => {setIsModalOpen(false); setFormError(false)}}>
         <CreateForm isEdit={true} dataType={dataType} formError={formError} btnText={'Rename'} handleCreateItem={handleEditItem} />
       </Modal>
     </div>

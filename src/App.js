@@ -54,10 +54,9 @@ function App() {
     });
   };
 
-  const isValuePresent = (value, config = fileConfig) => {
-    const { name, items } = config;
+  const isValuePresent = (value, config = fileData) => {
+    const { items } = config;
     let isPresent
-    if (value === name) isPresent = true
     items.forEach(item => item.name === value ? isPresent = true : isValuePresent(item.name, item));
     return isPresent
   }
