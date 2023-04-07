@@ -10,6 +10,11 @@
     border-bottom: 2px solid #ccc9c9;
 }
 
+.headingContainer{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
 .headingText {
     font-size: 2rem;
     cursor: pointer;
@@ -37,4 +42,18 @@
     flex-wrap: wrap;
     gap: 3rem;
     padding: 3rem;
+}
+
+@media only screen and (max-width: 800px) {
+    .arrowIcon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+    .headingText { 
+        font-size: 1.5rem; 
+    }
+    .body {
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
 }

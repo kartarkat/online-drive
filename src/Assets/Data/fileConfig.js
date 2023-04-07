@@ -12,7 +12,7 @@ export const fileConfig = {
       items: [
         {
           id: "3",
-          name: "public nested folder",
+          name: "nested folder",
           isFolder: true,
           parentId: "2",
           items: [
@@ -34,7 +34,7 @@ export const fileConfig = {
         },
         {
           id: "6",
-          name: "public_nested_file.txt",
+          name: "nested file.txt",
           isFolder: false,
           parentId: "2",
           items: []
@@ -100,7 +100,7 @@ export const fileConfig = {
     },
     {
       id: "15",
-      name: "My Test Folder",
+      name: "Test Folder",
       isFolder: true,
       parentId: "1",
       items: []

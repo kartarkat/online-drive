@@ -41,10 +41,9 @@ function Files({ fileData, setFileData, handleNavigate, breadcrumbs, setBreadcru
         return isPresent
     }
 
-    const handleFormSubmit = (value, currentFormItem) => {
-        const { id, isFolder } = currentFormItem
+    const handleFormSubmit = (value, isFolder, currentFormItem) => {
         if (!isValuePresent(value)) {
-            if (isEditMode) updateNode(fileData, id, value)
+            if (isEditMode) updateNode(fileData, currentFormItem.id, value)
             else insertNode(fileData, id, value, isFolder)
             setIsModalOpen(false)
             setFormError(false)
@@ -90,12 +89,14 @@ function Files({ fileData, setFileData, handleNavigate, breadcrumbs, setBreadcru
                     className={`arrowIcon ${!parentId ? 'disable' : ''}`}
                     alt={name}
                     src={arrowUp} />
+                <div className='headingContainer'>
                 {breadcrumbs.map((obj, i) =>
                     <div key={i}
                         onClick={obj.id === id ? () => { } : () => handleNavigate(obj.id)}
                         className={`headingText ${obj.id === id ? 'activeHeading' : ''}`}>
                         {' / '}{obj.name}</div>
                 )}
+                    </div>
             </div>
             <div className='body'>
                 {items.map(item =>
