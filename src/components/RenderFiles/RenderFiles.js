@@ -5,8 +5,17 @@ import RenderItem from '../RenderItem'
 import Modal from '../Modal';
 import CreateForm from '../CreateForm/CreateForm';
 
-
-function RenderFiles({ fileData = {}, setFileData, handleNavigate, insertData, deleteData, updateData, isValuePresent }) {
+function RenderFiles(
+    { fileData = {},
+        setFileData,
+        handleNavigate,
+        insertData,
+        deleteData,
+        updateData,
+        isValuePresent,
+        breadcrumbs,
+        setBreadcrumbs
+    }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formError, setFormError] = useState(false)
     const { id, parentId, name, items = [] } = fileData
@@ -29,10 +38,25 @@ function RenderFiles({ fileData = {}, setFileData, handleNavigate, insertData, d
                     className={`arrowIcon ${!parentId ? 'disable' : ''}`}
                     alt={name}
                     src={arrowUp} />
-                <div className='headingText'>{name}</div>
+                {breadcrumbs.map((obj, i) =>
+                    <div 
+                    key={i} 
+                    onClick={obj.id === id ? () => {} : () => handleNavigate(obj.id)} 
+                    className={`headingText ${obj.id === id ? 'activeHeading' : ''}`}>
+                        {' / '}{obj.name}</div>
+                )}
             </div>
             <div className='body'>
-                {items.map(item => <RenderItem key={item.id} item={item} setFileData={setFileData} deleteData={deleteData} updateData={updateData} isValuePresent={isValuePresent} />)}
+                {items.map(item =>
+                    <RenderItem
+                        key={item.id}
+                        item={item}
+                        setFileData={setFileData}
+                        deleteData={deleteData}
+                        updateData={updateData}
+                        isValuePresent={isValuePresent}
+                        setBreadcrumbs={setBreadcrumbs}
+                    />)}
                 <div className='item' onClick={() => setIsModalOpen(true)}>
                     <img
                         className='fileIcon'

@@ -4,7 +4,7 @@ import './RenderItem.css'
 import Modal from '../Modal/Modal';
 import CreateForm from '../CreateForm/CreateForm';
 
-function RenderItem({ item = {}, setFileData, deleteData, updateData, isValuePresent }) {
+function RenderItem({ item = {}, setFileData, deleteData, updateData, isValuePresent, setBreadcrumbs }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dataType, setDataType] = useState(false)
@@ -21,8 +21,9 @@ function RenderItem({ item = {}, setFileData, deleteData, updateData, isValuePre
     };
   }, []);
 
-  const handleItemClick = (event) => {
+  const handleItemClick = () => {
     setFileData(item)
+    setBreadcrumbs(prev => ([...prev, {id: item.id, name: item.name, parentId: item.parentId}]));
   }
 
   const handleClick = (event) => {

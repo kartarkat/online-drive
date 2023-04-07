@@ -12,6 +12,12 @@
 
 .headingText {
     font-size: 2rem;
+    cursor: pointer;
+    opacity: .5;
+}
+
+.activeHeading {
+    opacity: 1;
 }
 
 .arrowIcon {
@@ -21,7 +27,7 @@
     cursor: pointer;
 }
 
-.disable{
+.disable {
     opacity: 0.5;
     cursor: auto;
 }
