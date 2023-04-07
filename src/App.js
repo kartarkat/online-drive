@@ -1,22 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import './App.css';
 import { fileConfig } from './Assets/Data/fileConfig';
 import Files from './components/Files';
 
 function App() {
-  const [data, setData] = useState(fileConfig)
-  const [fileData, setFileData] = useState(fileConfig)
+  const localData = JSON.parse(localStorage.getItem('fileConfig')) || fileConfig;
+  const [data, setData] = useState(localData);
+  const [fileData, setFileData] = useState(fileConfig);
   const [breadcrumbs, setBreadcrumbs] = useState([])
 
   useEffect(() => {
     setBreadcrumbs([{ id: fileConfig.id, name: fileConfig.name }])
   }, [])
 
+  useLayoutEffect(() => {
+    localStorage.setItem('fileConfig', JSON.stringify(data));
+  }, [data]);
+
   useEffect(() => {
-    setData(prevData => ({
-      ...prevData,
-      items: prevData.items.map(item => item.id === fileData.id ? { ...item, items: fileData.items } : item)
-    }))
+    setData(prevData =>  {
+      if (prevData.id === fileData.id) {
+        return { ...prevData, items: fileData.items }
+      }
+      return {
+        ...prevData,
+        items: prevData.items.map(item => item.id === fileData.id ? { ...item, items: fileData.items } : item)
+      }
+    })
   }, [fileData])
 
   const handleBreadcrumbs = (id) => {
