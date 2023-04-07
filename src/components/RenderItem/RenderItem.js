@@ -3,12 +3,14 @@ import { Images } from '../../Assets/Images'
 import './RenderItem.css'
 import Modal from '../Modal/Modal';
 import CreateForm from '../CreateForm/CreateForm';
+import useTreeTraversal from '../../hooks/useTreeTraversal';
 
-function RenderItem({ item = {}, setFileData, deleteData, updateData, isValuePresent, setBreadcrumbs }) {
+function RenderItem({ item = {}, setFileData, fileData, isValuePresent, setBreadcrumbs }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dataType, setDataType] = useState(false)
   const [formError, setFormError] = useState(false)
+  const { deleteNode, updateNode } = useTreeTraversal();
 
   const menuRef = useRef(null);
   const { id, name, isFolder } = item
@@ -45,7 +47,7 @@ function RenderItem({ item = {}, setFileData, deleteData, updateData, isValuePre
 
   const handleEditItem = (val) => {
     if (!isValuePresent(val)) {
-      updateData(id, val)
+      updateNode(fileData, id, val)
       setIsModalOpen(false)
       setFormError(false)
     }
@@ -58,7 +60,7 @@ function RenderItem({ item = {}, setFileData, deleteData, updateData, isValuePre
       setIsMenuOpen(false)
       setIsModalOpen(true)
     }
-    else deleteData(id)
+    else setFileData(deleteNode(fileData, id))
   }
 
   const renderMenu = () => {

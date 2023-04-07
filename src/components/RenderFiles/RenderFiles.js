@@ -4,31 +4,29 @@ import { Images } from '../../Assets/Images'
 import RenderItem from '../RenderItem'
 import Modal from '../Modal';
 import CreateForm from '../CreateForm/CreateForm';
+import useTreeTraversal from '../../hooks/useTreeTraversal';
 
-function RenderFiles(
-    { fileData = {},
-        setFileData,
-        handleNavigate,
-        insertData,
-        deleteData,
-        updateData,
-        isValuePresent,
-        breadcrumbs,
-        setBreadcrumbs
-    }) {
+function RenderFiles({ fileData, setFileData, handleNavigate, breadcrumbs, setBreadcrumbs }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formError, setFormError] = useState(false)
+    const { insertNode } = useTreeTraversal();
     const { id, parentId, name, items = [] } = fileData
     const { arrowUp, newBtn } = Images
 
+    const isValuePresent = (value, config = fileData) => {
+        const { items } = config;
+        let isPresent
+        items.forEach(item => item.name === value ? isPresent = true : isValuePresent(item.name, item));
+        return isPresent
+    }
+
     const handleCreateItem = (value, isFolder) => {
         if (!isValuePresent(value)) {
-            insertData(id, value, isFolder, parentId)
+            insertNode(fileData, id, value, isFolder)
             setIsModalOpen(false)
             setFormError(false)
-        } else {
-            setFormError(true)
         }
+        else setFormError(true)
     }
 
     return (
@@ -40,10 +38,9 @@ function RenderFiles(
                     alt={name}
                     src={arrowUp} />
                 {breadcrumbs.map((obj, i) =>
-                    <div 
-                    key={i} 
-                    onClick={obj.id === id ? () => {} : () => handleNavigate(obj.id)} 
-                    className={`headingText ${obj.id === id ? 'activeHeading' : ''}`}>
+                    <div key={i}
+                        onClick={obj.id === id ? () => { } : () => handleNavigate(obj.id)}
+                        className={`headingText ${obj.id === id ? 'activeHeading' : ''}`}>
                         {' / '}{obj.name}</div>
                 )}
             </div>
@@ -53,8 +50,7 @@ function RenderFiles(
                         key={item.id}
                         item={item}
                         setFileData={setFileData}
-                        deleteData={deleteData}
-                        updateData={updateData}
+                        fileData={fileData}
                         isValuePresent={isValuePresent}
                         setBreadcrumbs={setBreadcrumbs}
                     />)}
@@ -66,7 +62,7 @@ function RenderFiles(
                     />
                 </div>
             </div>
-            <Modal title='Create new' isOpen={isModalOpen} onClose={() => {setIsModalOpen(false); setFormError(false)}}>
+            <Modal title='Create new' isOpen={isModalOpen} onClose={() => { setIsModalOpen(false); setFormError(false) }}>
                 <CreateForm handleCreateItem={handleCreateItem} formError={formError} />
             </Modal>
         </div>

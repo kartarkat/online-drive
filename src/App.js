@@ -2,31 +2,14 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import { fileConfig } from './Assets/Data/fileConfig';
 import RenderFiles from './components/RenderFiles';
-import useTreeTraversal from './hooks/useTreeTraversal';
 
 function App() {
   const [fileData, setFileData] = useState(fileConfig)
   const [breadcrumbs, setBreadcrumbs] = useState([])
-  const { insertNode, deleteNode, updateNode } = useTreeTraversal();
 
   useEffect(() => {
     setBreadcrumbs([{ id: fileConfig.id, name: fileConfig.name }])
   }, [])
-
-  const handleInsertData = (id, val, isFolder) => {
-    const res = insertNode(fileData, id, val, isFolder);
-    setFileData(res);
-  };
-
-  const handleDeleteData = (id) => {
-    const res = deleteNode(fileData, id);
-    setFileData(res);
-  };
-
-  const handleUpdateData = (id, val) => {
-    const res = updateNode(fileData, id, val);
-    setFileData(res);
-  };
 
   const handleBreadcrumbs = (id) => {
     const result = []
@@ -54,25 +37,14 @@ function App() {
     });
   };
 
-  const isValuePresent = (value, config = fileData) => {
-    const { items } = config;
-    let isPresent
-    items.forEach(item => item.name === value ? isPresent = true : isValuePresent(item.name, item));
-    return isPresent
-  }
-
   return (
     <div className="App">
       <RenderFiles
-        breadcrumbs={breadcrumbs}
-        setBreadcrumbs={setBreadcrumbs}
         fileData={fileData}
         setFileData={setFileData}
+        breadcrumbs={breadcrumbs}
+        setBreadcrumbs={setBreadcrumbs}
         handleNavigate={handleNavigate}
-        insertData={handleInsertData}
-        deleteData={handleDeleteData}
-        updateData={handleUpdateData}
-        isValuePresent={isValuePresent}
       />
     </div>
   );
