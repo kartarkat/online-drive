@@ -9,6 +9,9 @@ Try this app [https://online-drive-kat.netlify.app](https://online-drive-kat.net
 - `npm i`
 - `npm start`
 
+### Preview
+![](./src/Assets/Screenshots/preview.gif)
+
 ### Actions
 - **Create** -> Folder / File
 - **Rename** -> Folder / File
@@ -33,6 +36,3 @@ Try this app [https://online-drive-kat.netlify.app](https://online-drive-kat.net
 - insertNode
 - deleteNode
 - updateNode
-
-### Preview
-![](./src/Assets/Screenshots/files.png)
