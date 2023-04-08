@@ -13,10 +13,15 @@ function App() {
   }, [])
 
   useEffect(() => {
-    setData(prevData => ({
-      ...prevData,
-      items: prevData.items.map(item => item.id === fileData.id ? { ...item, items: fileData.items } : item)
-    }))
+    setData(prevData => {
+      if (prevData.id === fileData.id) {
+        return { ...prevData, items: fileData.items }
+      }
+      return {
+        ...prevData,
+        items: prevData.items.map(item => item.id === fileData.id ? { ...item, items: fileData.items } : item)
+      }
+    })
   }, [fileData])
 
   const handleBreadcrumbs = (id) => {
@@ -41,7 +46,7 @@ function App() {
       handleNavigate(parentId, item);
     }
   };
-  
+
   return (
     <div className="App">
       <Files
