@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
-import './CreateForm.css'
+import './Form.css'
 
-function CreateForm({ handleSubmit, isEditMode, currentItem, formError }) {
+function Form({ handleSubmit, isEditMode, currentItem, formError }) {
     const [dataType, setDataType] = useState(currentItem.isFolder)
     const inputRef = useRef(null)
     const [inputError, setInputError] = useState(null)
@@ -61,4 +61,4 @@ function CreateForm({ handleSubmit, isEditMode, currentItem, formError }) {
     )
 }
 
-export default CreateForm
+export default Form

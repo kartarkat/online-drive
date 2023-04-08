@@ -3,7 +3,7 @@ import './Files.css'
 import { Images } from '../../Assets/Images'
 import FileItem from '../FileItem'
 import Modal from '../Modal';
-import CreateForm from '../CreateForm';
+import Form from '../Form';
 import useTreeTraversal from '../../hooks/useTreeTraversal';
 import ContextMenu from '../ContextMenu/ContextMenu';
 
@@ -73,7 +73,7 @@ function Files({ fileData, setFileData, handleNavigate, breadcrumbs, setBreadcru
             isOpen={isModalOpen}
             onClose={() => { setIsModalOpen(false); setFormError(false); setIsEditMode(false) }}
         >
-            <CreateForm
+            <Form
                 isEditMode={isEditMode}
                 currentItem={currentItem}
                 handleSubmit={handleFormSubmit}
