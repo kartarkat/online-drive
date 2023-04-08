@@ -10,7 +10,7 @@ Try this app [https://online-drive-kat.netlify.app](https://online-drive-kat.net
 - `npm start`
 
 ### Preview
-![](./src/Assets/Screenshots/preview.gif)
+![](./src/Assets/Screenshots/Online_Drive.gif)
 
 ### Actions
 - **Create** -> Folder / File
