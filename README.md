@@ -1,5 +1,6 @@
 # Online Drive
-This app simulates an online drive file structure using Json data. App is build using **React JS**
+This app simulates an online drive file structure using Json data. App is built using **React JS**
+
 Try this app [https://online-drive-kat.netlify.app](https://online-drive-kat.netlify.app/)
 
 ### Get started
@@ -32,7 +33,7 @@ Try this app [https://online-drive-kat.netlify.app](https://online-drive-kat.net
 - **Context Menu** -> custom menu for file item operations
 
 ### Hooks
-**useTreeTraversal ()**  - since we are using tree like structure, create a custom hook to do crud operations in the tree. it has the following functions.
+**useTreeTraversal ()**  - since we are using tree like structure, create a custom hook to do CRUD operations in the tree. it has the following functions.
 - insertNode
 - deleteNode
 - updateNode
