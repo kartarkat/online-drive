@@ -19,7 +19,7 @@ Try this app [https://online-drive-kat.netlify.app](https://online-drive-kat.net
 - **Delete** -> Folder / File
 - **Check** -> Folder / File already present
 
-### Validations 
+### Validations
 - **Proper File Name** - > Eg: fileName.extension
 - **Proper Folder Name** -> Eg: folderName
 - **Duplicates** -> Not allowed in same level
@@ -27,13 +27,13 @@ Try this app [https://online-drive-kat.netlify.app](https://online-drive-kat.net
 
 ### Components
 - **Files**  -> To render, the current file level
-- **File Item** - >To render al items in the files
+- **File Item** - >To render all items in the files
 - **Form**  -> To get user input
 - **Modal** -> To display data in modal
 - **Context Menu** -> custom menu for file item operations
 
 ### Hooks
-**useTreeTraversal ()**  - since we are using tree like structure, create a custom hook to do CRUD operations in the tree. it has the following functions.
+**useTreeTraversal ()**  - since we are using a tree-like structure, create a custom hook to do CRUD operations in the tree. It has the following functions.
 - insertNode
 - deleteNode
 - updateNode
